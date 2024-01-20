@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { NextResponse } from 'next/server'
+import { getData } from './getData'
 
-export function GET (req: Request): any {
+export async function GET (req: Request): Promise<any> {
   console.log(req.body)
-  return NextResponse.json({ text: '23' })
+
+  const data = await getData()
+  return NextResponse.json(data)
 }
 
 export function POST (req: Request): any {
