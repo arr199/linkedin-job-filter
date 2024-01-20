@@ -4,13 +4,13 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import React, { useState } from 'react'
 
-const URL = 'http://localhost:3000/api/get_linkedin_data'
 export default function Home (): React.JSX.Element {
   const [data, setData] = useState<any>(null)
 
   function handleSubmit (e: React.FormEvent): void {
     e.preventDefault()
-    fetch(URL)
+
+    fetch(process.env.NEXT_PUBLIC_GET_LINKEDIN_DATA_ENDPOINT ?? '')
       .then(async data => await data.json())
       .then((data) => { setData(data) })
       .catch(err => { console.log(err) })
