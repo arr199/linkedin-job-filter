@@ -9,7 +9,7 @@ export default function Home (): React.JSX.Element {
 
   function handleSubmit (e: React.FormEvent): void {
     e.preventDefault()
-    console.log(process.env.NEXT_PUBLIC_GET_LINKEDIN_DATA_ENDPOINT)
+    console.log('THIS IS THE ENVIROMENT VARIABLE:', process.env.NEXT_PUBLIC_GET_LINKEDIN_DATA_ENDPOINT)
     fetch(process.env.NEXT_PUBLIC_GET_LINKEDIN_DATA_ENDPOINT ?? '')
       .then(async data => await data.json())
       .then((data) => { setData(data) })
