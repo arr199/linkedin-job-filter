@@ -134,26 +134,26 @@ export default function Home (): React.JSX.Element {
   )
 }
 
-export function HardFilters (): React.JSX.Element {
-  return (
-    <div className='flex flex-col w-full gap-2 items-start border-[2px] shadow-xl rounded-md p-6 border-slate-400'>
-        <Label className='font-semibold text-lg' >Hard filters </Label>
-          <div className='   items-center gap-4'>
-            <Label className='font-semibold '>Title </Label>
-            <Input type='text' placeholder='software developer..' ></Input>
-          </div>
-          <div className='   items-center gap-4'>
-            <Label className='font-semibold '>Description </Label>
-            <Input type='text' placeholder='software developer..' ></Input>
-          </div>
-          <div className='items-center gap-4'>
-            <Label className='font-semibold '>Title </Label>
-            <Input type='text' placeholder='software developer..' ></Input>
-          </div>
-          <div className='  items-center gap-4'>
-            <Label className='font-semibold '>Title </Label>
-            <Input type='text' placeholder='software developer..' ></Input>
-          </div>
-        </div>
-  )
-}
+// export function HardFilters (): React.JSX.Element {
+//   return (
+//     <div className='flex flex-col w-full gap-2 items-start border-[2px] shadow-xl rounded-md p-6 border-slate-400'>
+//         <Label className='font-semibold text-lg' >Hard filters </Label>
+//           <div className='   items-center gap-4'>
+//             <Label className='font-semibold '>Title </Label>
+//             <Input type='text' placeholder='software developer..' ></Input>
+//           </div>
+//           <div className='   items-center gap-4'>
+//             <Label className='font-semibold '>Description </Label>
+//             <Input type='text' placeholder='software developer..' ></Input>
+//           </div>
+//           <div className='items-center gap-4'>
+//             <Label className='font-semibold '>Title </Label>
+//             <Input type='text' placeholder='software developer..' ></Input>
+//           </div>
+//           <div className='  items-center gap-4'>
+//             <Label className='font-semibold '>Title </Label>
+//             <Input type='text' placeholder='software developer..' ></Input>
+//           </div>
+//         </div>
+//   )
+// }
