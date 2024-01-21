@@ -1,4 +1,3 @@
-import { type Job } from '@/app/api/get_linkedin_data/getData'
 import React from 'react'
 import { Button, buttonVariants } from './ui/button'
 import { ArrowBigRightDash, CircleDollarSign, MapPin, Timer } from 'lucide-react'
