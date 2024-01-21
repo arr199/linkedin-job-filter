@@ -19,7 +19,7 @@ const dataSchema = z.object({
     .regex(/[a-zA-Z]/, { message: 'Only letters and numbers' })),
   location: z.string().transform(e => e.replace(/\s+/g, '')).pipe(z.string().min(1, { message: 'Can not be empty' })
     .regex(/[a-zA-Z]/, { message: 'Only letters and numbers' })),
-  date: z.enum(['any_time', 'past_month', 'past_week', 'past_24_hours'])
+  date: z.enum(['any_time', 'f_TPR=r86400', 'f_TPR=r604800', 'f_TPR=r2592000'])
 
 })
 

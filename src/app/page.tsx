@@ -84,9 +84,9 @@ export default function Home (): React.JSX.Element {
               </SelectTrigger>
               <SelectContent >
                 <SelectItem value="any_time">Any time</SelectItem>
-                <SelectItem value="past_month">Past month</SelectItem>
-                <SelectItem value="past_week">Past week</SelectItem>
-                <SelectItem value="past_24_hours">Past 24 hours</SelectItem>
+                <SelectItem value='f_TPR=r2592000'>Past month</SelectItem>
+                <SelectItem value='f_TPR=r604800'>Past week</SelectItem>
+                <SelectItem value='f_TPR=r86400'>Past 24 hours</SelectItem>
               </SelectContent>
             </Select>
           </div>
