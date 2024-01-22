@@ -9,5 +9,5 @@ interface Job {
 interface Filter {
   title: string
   location: string
-  date: 'any_time' | 'f_TPR=r86400' | 'f_TPR=r604800' | 'f_TPR=r2592000'
+  date: 'any_time' | 'r86400' | 'r604800' | 'r2592000'
 }

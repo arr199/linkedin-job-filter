@@ -18,30 +18,21 @@ import { Loader2, MapPin } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { cn } from '@/lib/utils'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious
-} from '@/components/ui/pagination'
 import { sendInputsData } from '@/lib/data'
-import type { TFormData } from './api/get_linkedin_data/route'
-import { useForm } from 'react-hook-form'
+import { useFilterStore } from '@/store/store'
+import { RightNavbarMobile } from '@/components/rightBar/rightNavbarMobile'
+import { RightNavbarDesktop } from '@/components/rightBar/rightNavbarDesktop'
 
 export default function Home (): React.JSX.Element {
   const [selectedJob, setSelectedJob] = useState<number>(0)
-  const { register, getValues } = useForm()
-  const [dateInput, setDateInput] = useState({ date: 'any_time' })
+  const { title, location, date, setTitle, setLocation, setDatePosted } = useFilterStore()
 
   const { data, refetch, isLoading, isFetching } = useQuery({
     queryKey: ['data'],
     queryFn: async () => {
-      const data = getValues()
-      data.date = dateInput.date
-      return await sendInputsData(data as TFormData)
+      const data = { title, location, date }
+
+      return await sendInputsData(data)
     },
     enabled: false
 
@@ -51,7 +42,7 @@ export default function Home (): React.JSX.Element {
     e.preventDefault()
     refetch().catch(err => { console.log(err) })
   }
-  console.log(data)
+
   return (
     <main className='max-w-[1200px] mx-auto max-h-[600px]'>
       {/* SEARCH BAR */}
@@ -61,32 +52,32 @@ export default function Home (): React.JSX.Element {
           <div className='absolute top-4 right-4'>
             <ModeToggle ></ModeToggle>
           </div>
+          {/* TITLE  */}
           <div>
             <Label className='font-semibold text-lg' >Title</Label>
-            <Input {...register('title')} className='mt-2' type='text' placeholder='Software developer..' ></Input>
-            {/* TITLE ERROR */}
+            <Input value={title} onChange={(e) => { setTitle(e.target.value) } } className='mt-2' type='text' placeholder='Software developer..' ></Input>
             <p className=' mt-2 text-red-500 text-[12px] absolute'>{data?.fieldErrors?.title ? data.fieldErrors.title[0] : null}</p>
           </div>
+          {/* LOCATION */}
           <div >
             <Label className='font-semibold text-lg' >Location</Label>
             <div className='relative'>
-              <Input {...register('location')} className='mt-2' type='text' placeholder='European union' ></Input>
+              <Input list='location-list' value={location} onChange={(e) => { setLocation(e.target.value) } } className='mt-2' type='text' placeholder='European union' ></Input>
               <MapPin className='w-5 absolute right-2 top-2 text-muted-foreground'></MapPin>
-              {/* LOCATION ERROR */}
               <p className='  mt-2 text-red-500 text-[12px] absolute'> {data?.fieldErrors?.location ? data.fieldErrors.location[0] : null}</p>
             </div>
           </div>
           <div className='flex flex-col'>
             <Label className='font-semibold text-lg' >Date Posted</Label>
-            <Select value={dateInput.date} onValueChange={(value) => { setDateInput(old => ({ ...old, date: value })) }} defaultValue={dateInput.date} >
+            <Select value={date} onValueChange={(value: 'any_time' | 'r86400' | 'r604800' | 'r2592000') => { setDatePosted(value) }} defaultValue={date} >
               <SelectTrigger className='w-40 mt-2'>
                 <SelectValue placeholder="Date Posted"></SelectValue>
               </SelectTrigger>
               <SelectContent >
                 <SelectItem value="any_time">Any time</SelectItem>
-                <SelectItem value='f_TPR=r2592000'>Past month</SelectItem>
-                <SelectItem value='f_TPR=r604800'>Past week</SelectItem>
-                <SelectItem value='f_TPR=r86400'>Past 24 hours</SelectItem>
+                <SelectItem value='r2592000'>Past month</SelectItem>
+                <SelectItem value='r604800'>Past week</SelectItem>
+                <SelectItem value='r86400'>Past 24 hours</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -113,22 +104,7 @@ export default function Home (): React.JSX.Element {
                   </div>
 
                 ))}
-                <Pagination className='mt-8'>
-                  <PaginationContent>
-                    <PaginationItem>
-                      <PaginationPrevious href="#" />
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink href="#">1</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationEllipsis />
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationNext href="#" />
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
+
               </ScrollArea >
               {/* DETAIL PAGE */}
               <ScrollArea className='ml-10 flex  border-muted-foreground border-2 rounded-lg p-4 w-full max-h-[70vh] '>
@@ -139,31 +115,8 @@ export default function Home (): React.JSX.Element {
             </div>
           </>
           : data?.length === 0 ? <h1>No results</h1> : <h1>Make your first search</h1> }
-
+          <RightNavbarMobile/>
+          <RightNavbarDesktop />
     </main>
   )
 }
-
-// export function HardFilters (): React.JSX.Element {
-//   return (
-//     <div className='flex flex-col w-full gap-2 items-start border-[2px] shadow-xl rounded-md p-6 border-slate-400'>
-//         <Label className='font-semibold text-lg' >Hard filters </Label>
-//           <div className='   items-center gap-4'>
-//             <Label className='font-semibold '>Title </Label>
-//             <Input type='text' placeholder='software developer..' ></Input>
-//           </div>
-//           <div className='   items-center gap-4'>
-//             <Label className='font-semibold '>Description </Label>
-//             <Input type='text' placeholder='software developer..' ></Input>
-//           </div>
-//           <div className='items-center gap-4'>
-//             <Label className='font-semibold '>Title </Label>
-//             <Input type='text' placeholder='software developer..' ></Input>
-//           </div>
-//           <div className='  items-center gap-4'>
-//             <Label className='font-semibold '>Title </Label>
-//             <Input type='text' placeholder='software developer..' ></Input>
-//           </div>
-//         </div>
-//   )
-// }

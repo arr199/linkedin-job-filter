@@ -16,10 +16,10 @@ export async function POST (req: Request): Promise<NextResponse> {
 
 const dataSchema = z.object({
   title: z.string().transform(e => e.replace(/\s+/g, '')).pipe(z.string().min(1, { message: 'Can not be empty' })
-    .regex(/[a-zA-Z]/, { message: 'Only letters and numbers' })),
+    .regex(/[a-zA-Z,0-9]/, { message: 'Only letters and numbers' })),
   location: z.string().transform(e => e.replace(/\s+/g, '')).pipe(z.string().min(1, { message: 'Can not be empty' })
-    .regex(/[a-zA-Z]/, { message: 'Only letters and numbers' })),
-  date: z.enum(['any_time', 'f_TPR=r86400', 'f_TPR=r604800', 'f_TPR=r2592000'])
+    .regex(/[a-zA-Z,0-9]/, { message: 'Only letters and numbers' })),
+  date: z.enum(['any_time', 'r86400', 'r604800', 'r2592000'])
 
 })
 
