@@ -10,15 +10,15 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/h
 
 export function RightNavbarDesktop (): React.JSX.Element {
   return (
-      <div className='w-[330px] h-full space-y-10 right-0 top-2 fixed border-[2px] shadow-xl rounded-md px-6 border-muted-foreground'>
-              <div className='flex items-center gap-2 mt-4'>
-                <h1 className='font-bold text-xl'>Exact Match Filters </h1>
-                <InfoHoverCard></InfoHoverCard>
-              </div>
-              <TitleContainer />
-              <DescriptionContainer />
-              <LocationContainer />
-          </div>
+    <div className=' w-[330px] h-full space-y-10 right-0 top-2 fixed border-[2px] shadow-xl rounded-md px-6 border-muted-foreground'>
+      <div className='flex items-center gap-2 mt-4'>
+        <h1 className='font-bold text-xl'>Exact Match Filters </h1>
+        <InfoHoverCard></InfoHoverCard>
+      </div>
+      <TitleContainer />
+      <DescriptionContainer />
+      <LocationContainer />
+   </div>
   )
 }
 
@@ -46,7 +46,9 @@ function TitleContainer (): React.JSX.Element {
           <Button onClick={() => {
             setExactTitle(keyWord)
             setKeyWord('')
-          }}>Add</Button>
+          }}
+          disabled={keyWord.replace(/\s+/g, '').length === 0}
+          >Add</Button>
         </div>
 
         <div className='h-32 w-full border-dashed border-2 rounded-lg p-2 flex flex-wrap gap-2 '>
@@ -73,7 +75,9 @@ function DescriptionContainer (): React.JSX.Element {
                 <Label>Description</Label>
                 <div className=' flex items-center gap-6'>
                     <Input value={keyWord} onChange={(e) => { setKeyWord(e.target.value) } }></Input>
-                    <Button onClick={() => { setExactDescription(keyWord) } }>Add</Button>
+                    <Button
+                    disabled={keyWord.replace(/\s+/g, '').length === 0}
+                    onClick={() => { setExactDescription(keyWord) } }>Add</Button>
                 </div>
             </div>
             <div className='h-32 w-full border-dashed border-2 rounded-lg p-2 flex flex-wrap gap-2 '>
@@ -102,7 +106,9 @@ function LocationContainer (): React.JSX.Element {
                   <Label>Location</Label>
                   <div className=' flex items-center gap-6'>
                       <Input value={keyWord} onChange={(e) => { setKeyWord(e.target.value) } }></Input>
-                      <Button onClick={() => { setExactLocation(keyWord) } }>Add</Button>
+                      <Button
+                      disabled={keyWord.replace(/\s+/g, '').length === 0}
+                      onClick={() => { setExactLocation(keyWord) } }>Add</Button>
                   </div>
               </div>
               <div className='h-32 w-full border-dashed border-2 rounded-lg p-2 flex flex-wrap gap-2 '>
@@ -111,7 +117,8 @@ function LocationContainer (): React.JSX.Element {
                     removeExactLocation(item.id)
                   }} key={item.id}
                       className='flex gap-1'
-                      variant="outline">
+                      variant="outline"
+                      >
                       {item.value}
                       <Cross1Icon/>
                       </Button>

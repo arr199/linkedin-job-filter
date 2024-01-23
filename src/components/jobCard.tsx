@@ -1,6 +1,7 @@
 import React from 'react'
-import { Button, buttonVariants } from './ui/button'
+import { buttonVariants } from './ui/button'
 import { ArrowBigRightDash, CircleDollarSign, MapPin, Timer } from 'lucide-react'
+import Link from 'next/link'
 
 export default function JobCard ({ data, onClick }: { data: Job, onClick: any }): JSX.Element {
   return (
@@ -11,13 +12,13 @@ export default function JobCard ({ data, onClick }: { data: Job, onClick: any })
       <div className='flex gap-2 items-center'> <MapPin className='w-5'/> <span className='text-muted-foreground text-sm'>{data?.location}</span></div>
       <p className='flex  gap-2'><Timer className='w-5'></Timer><span>{data?.date}</span> </p>
       <p className=' flex gap-2'><CircleDollarSign className='w-5' />{data?.salary}  </p>
-      <Button onClick={onClick} className={buttonVariants({
+      <Link target='_blank' href={`https://www.linkedin.com/jobs/search/?currentJobId=${data.jobId}`} onClick={onClick} className={buttonVariants({
         variant: 'default',
         className: 'self-start px-10  mt-4 font-bold flex gap-2'
-      })}>Details
+      })}>Apply
 
       <ArrowBigRightDash></ArrowBigRightDash>
-      </Button>
+      </Link>
    </div>
   )
 }

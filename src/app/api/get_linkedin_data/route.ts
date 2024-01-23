@@ -19,8 +19,28 @@ const dataSchema = z.object({
     .regex(/[a-zA-Z,0-9]/, { message: 'Only letters and numbers' })),
   location: z.string().transform(e => e.replace(/\s+/g, '')).pipe(z.string().min(1, { message: 'Can not be empty' })
     .regex(/[a-zA-Z,0-9]/, { message: 'Only letters and numbers' })),
-  date: z.enum(['any_time', 'r86400', 'r604800', 'r2592000'])
+  date: z.enum(['any_time', 'r86400', 'r604800', 'r2592000']),
+  exactTitle: z.array(z.object({
+    value: z.string(),
+    id: z.string()
+  }
+
+  )),
+  exactLocation: z.array(z.object({
+    value: z.string(),
+    id: z.string()
+  }
+
+  )),
+  exactDescription: z.array(z.object({
+    value: z.string(),
+    id: z.string()
+  }
+
+  ))
 
 })
+
+//
 
 export type TFormData = z.infer<typeof dataSchema>

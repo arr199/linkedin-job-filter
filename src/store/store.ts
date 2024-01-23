@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
+import { API } from '@/lib/API'
 
 interface exactFilter {
   value: string
@@ -13,10 +14,12 @@ interface FilterStorage {
   exactTitle: exactFilter[]
   exactDescription: exactFilter[]
   exactLocation: exactFilter[]
+
   setTitle: (value: string) => void
   setLocation: (value: string) => void
   setDatePosted: (value: 'any_time' | 'r86400' | 'r604800' | 'r2592000') => void
   setExactTitle: (value: string) => void
+
   removeExactTitle: (id: string) => void
   setExactDescription: (value: string) => void
   removeExactDescription: (id: string) => void
@@ -28,9 +31,11 @@ export const useFilterStore = create<FilterStorage>()(persist((set) => ({
   title: '',
   location: '',
   date: 'any_time',
-  exactTitle: [],
+  exactTitle: [{ value: 'hello', id: '4970a0asd-de1b-423e-a8c0-e5de85ec458a' }],
+
   exactDescription: [],
   exactLocation: [],
+
   setTitle: (value) => { set(() => ({ title: value })) },
   setLocation: (value) => { set(() => ({ location: value })) },
   setDatePosted: (value) => { set(() => ({ date: value })) },
@@ -77,3 +82,37 @@ export const useFilterStore = create<FilterStorage>()(persist((set) => ({
 }), { name: 'filter-storage', storage: createJSONStorage(() => window.localStorage) }
 
 ))
+
+interface ExperienceLevel {
+  checked: boolean
+  value: string
+  label: string
+}
+
+interface ExperienceLevelStore {
+  experienceLevel: ExperienceLevel[]
+  setExperienceLevel: (value: string) => void
+}
+
+export const useExperienceLevelStore = create<ExperienceLevelStore>()(persist((set) => ({
+  experienceLevel: API.INITIAL_EXPERIENCE_LEVEL,
+  setExperienceLevel: (value) => {
+    set((state) => {
+      if (value === 'All') {
+        return ({
+          ...state,
+          experienceLevel:
+          [...state.experienceLevel].map(e => e.value !== 'All' ? { ...e, checked: false } : { ...e, checked: !e.checked })
+        })
+      }
+      return ({
+        ...state,
+        experienceLevel:
+          [...state.experienceLevel].map(e => e.value === value
+            ? { ...e, checked: !e.checked }
+            : e.value === 'All' ? { ...e, checked: false } : e)
+
+      })
+    })
+  }
+}), { name: 'experience_dropdown', storage: createJSONStorage(() => window.localStorage) }))
